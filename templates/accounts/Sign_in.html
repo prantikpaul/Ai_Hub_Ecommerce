@@ -5,20 +5,34 @@
 <!-- Begin Login Content Area -->
 <div class="page-section mb-60">
         <div class="container">
+        
+
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30" style="margin: auto;">
                     <!-- Login Form s-->
-                    <form action="#" >
+                    <form method="POST" >
+                    {% csrf_token %}
                         <div class="login-form">
                             <h4 class="login-title">Login</h4>
+                            {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                <li{% if message.tags %} style="font-size: 15px; color: red;" class="{{ message.tags }}"{% endif %}>
+                                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                                    {{ message }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            <br>
                             <div class="row">
                                 <div class="col-md-12 col-12 mb-20">
-                                    <label>Email Address*</label>
-                                    <input class="mb-0" type="email" placeholder="Email Address" >
+                                    <label>Username*</label>
+                                    <input class="mb-0" name="uname" type="text" placeholder="Username" >
                                 </div>
                                 <div class="col-12 mb-20">
                                     <label>Password</label>
-                                    <input class="mb-0" type="password" placeholder="Password">
+                                    <input class="mb-0" name="pass" type="password" placeholder="Password">
                                 </div>
                                 <div class="col-md-8">
                                     <div class="check-box d-inline-block ml-0 ml-md-2 mt-10">
