@@ -7,6 +7,7 @@
 <!-- Begin Mobile Menu Area -->
 <div class="mobile-menu-area d-lg-none d-xl-none col-12">
         <div class="container"> 
+        
             <div class="row">
                 <div class="mobile-menu">
                 </div>
@@ -19,6 +20,17 @@
 <!-- Begin Slider With Category Menu Area -->
 <div class="slider-with-banner">
     <div class="container">
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} style="font-size: 15px; color: green;" class="{{ message.tags }}"{% endif %}>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+           
         <div class="row">
             <!-- Begin Category Menu Area -->
             <div class="col-lg-3">
