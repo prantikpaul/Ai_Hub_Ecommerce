@@ -1,5 +1,46 @@
+{% extends 'home/base.html' %}
 {% block title %}Forget Password{% endblock %}
 {% block body %}
 <h1>Forget Pass</h1>
+<div class="page-section mb-60">
+        <div class="container">
+        
 
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30" style="margin: auto;">
+                    <!-- Login Form s-->
+                    <form method="POST" >
+                    {% csrf_token %}
+                        <div class="login-form">
+                            <h4 class="login-title">Forget Password</h4>
+                            {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                <li{% if message.tags %} style="font-size: 15px; color: red;" class="{{ message.tags }}"{% endif %}>
+                                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                                    {{ message }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12 col-12 mb-20">
+                                    <label>Email*</label>
+                                    <input class="mb-0" name="email" type="text" placeholder="Enter your Email" >
+                                </div>
+                                <div class="col-12 mb-20">
+                                    <label>New Password</label>
+                                    <input class="mb-0" name="pass" type="password" placeholder="New Password">
+                                </div>
+                                <div class="col-md-12">
+                                    <button type='submit' class="register-button mt-0">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
