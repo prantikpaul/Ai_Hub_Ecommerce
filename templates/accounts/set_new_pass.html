@@ -1,10 +1,7 @@
 {% extends 'home/base.html' %}
-{% block title %}Success{% endblock %}
+{% block title %}Set New Password{% endblock %}
 {% block body %}
-<h1>Please Check Your Email</h1>
-<h2>YOu can Click Link The Link To Verify</h2>
-<br>
-<br>
+<h1>set a new pass</h1>
 <div class="page-section mb-60">
         <div class="container">
         
@@ -15,7 +12,7 @@
                     <form method="POST" >
                     {% csrf_token %}
                         <div class="login-form">
-                            <h4 class="login-title">Please Enter The Otp</h4>
+                            <h4 class="login-title">Please Enter New Password</h4>
                             {% if messages %}
                             <ul class="messages">
                                 {% for message in messages %}
@@ -28,14 +25,14 @@
                             {% endif %}
                             <br>
                             <div class="row">
-                                <div class="col-md-12 col-12 mb-20">
-                                    <label>Otp*</label>
-                                    <input class="mb-0" name="otp" type="text" placeholder="Enter your OTP" >
+                                <div class="col-md-6 mb-20">
+                                        <label>Password</label>
+                                        <input class="mb-0" type="password" placeholder="Password" name="pass" required>
                                 </div>
-                                {% comment %} <div class="col-12 mb-20">
-                                    <label>New Password</label>
-                                    <input class="mb-0" name="pass" type="password" placeholder="New Password">
-                                </div> {% endcomment %}
+                                <div class="col-md-6 mb-20">
+                                        <label>Confirm Password</label>
+                                        <input class="mb-0" type="password" placeholder="Confirm Password" name="cpass" required>
+                                </div>
                                 <div class="col-md-12">
                                     <button type='submit' class="register-button mt-0">Submit</button>
                                 </div>
