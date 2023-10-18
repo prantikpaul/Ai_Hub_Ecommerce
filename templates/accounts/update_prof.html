@@ -1,0 +1,54 @@
+{% extends "home/base.html" %}
+{% block title %}Update{% endblock %}
+{% block body %}
+<h1>Update</h1>
+<div class="col-sm-12 col-md-12 col-lg-6 col-xs-12" style="margin: auto;">
+        <form method="POST">
+            {% csrf_token %}
+                <ul class="messages" style="font-size: 20px;">
+                        {% for message in messages %}
+                                <li {% if message.tags == 'success' %} style="color: green;" {% elif message.tags == 'warning' %} style="color: red;" {% endif %}>
+                                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                                {{ message }}
+                                </li>
+                        {% endfor %}
+                </ul>
+
+            <div class="login-form">
+                <h4 class="login-title">Update Profile</h4>
+                <div class="row">
+                    <div class="col-md-6 col-12 mb-20">
+                        <label>First Name</label>
+                        <input style="font-weight: bold ; color: #000000;" class="mb-0" type="text" placeholder="First Name" value="{{user.first_name}}" name="fname" required>
+                    </div>
+                    <div class="col-md-6 col-12 mb-20">
+                        <label>Last Name</label>
+                        <input style="font-weight: bold ; color: #000000;" class="mb-0" type="text" placeholder="Last Name" value="{{user.last_name}}" name="lname" required>
+                    </div>
+                    <div class="col-md-12 mb-20">
+                        <label >User Name*</label>
+                        <input style="font-weight: bold ; color: #000000;" class="mb-0" type="username" value="{{user.username}}" placeholder="username" name="uname" required>
+                    </div>
+                    <div class="col-md-12 mb-20">
+                        <label>Email Address*</label>
+                        <input style="font-weight: bold ; color: #000000;" class="mb-0" type="email" value="{{user.email}}" placeholder="Email Address" name="email" required>
+                    </div>
+                     <!-- <div class="col-md-6 mb-20">
+                        <label>Password</label>
+                        <input class="mb-0" type="password" placeholder="Password" name="pass" required>
+                    </div>
+                    <div class="col-md-6 mb-20">
+                        <label>Confirm Password</label>
+                        <input class="mb-0" type="password" placeholder="Confirm Password" name="cpass" required>
+                    </div>
+                    <div class="col-12">
+                        <button class="register-button mt-0">Register</button>
+                    </div>  -->
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}

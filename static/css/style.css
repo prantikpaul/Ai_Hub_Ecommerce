@@ -450,7 +450,7 @@ textarea:focus {
 /*----------------------------------------*/
 /*Home One | Slider Background Image*/
 .bg-1, .bg-2, .bg-3 {
-	background-image: url(static/images/slider/1.jpg);
+	background-image: url(static/images/slider/1pp.jpg);
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
@@ -458,10 +458,10 @@ textarea:focus {
 	width: 100%;
 }
 .bg-2 {
-	background-image: url(static/images/slider/2.jpg);
+	background-image: url(static/images/slider/2pp.jpg);
 }
 .bg-3 {
-	background-image: url(static/images/slider/3.jpg);
+	background-image: url(static/images/slider/3rr.jpg);
 }
 /*Home Two | Slider Background Image*/
 .bg-4, .bg-5, .bg-6 {
@@ -1866,7 +1866,7 @@ textarea:focus {
 }
 .megamenu-static-holder ul li ul li.active a, 
 .dropdown-holder ul li ul li.active a {
-	color: #fed700;
+	color: #fd0f13;
 }
 .megamenu-holder .megamenu > li > a:hover, 
 .megamenu-holder .megamenu li ul li a:hover,
