@@ -14,13 +14,13 @@ from django.conf import settings
 # Create your views here.
 
 def sign_in(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated: #jodi kono user logged in thake taile take home page a redirect kore dibe..
         return redirect ('indexpp')
     else:
         if request.method=='POST':
             Uname=request.POST['uname']
             Pass=request.POST['pass']
-            user=auth.authenticate(username=Uname,password=Pass)
+            user=auth.authenticate(username=Uname,password=Pass) #check kore dekhbe username and pass kono user er sthe match kore ki na !
             if user:
                 prof=Profile.objects.get(user=user) #profile er nam & user er nam same
                 if prof.is_verified is True or prof.sign_in_otp_verify is True:
@@ -128,7 +128,7 @@ def verify(request, auth_token):
     profile_obj = Profile.objects.filter(auth_token=auth_token).first()
     profile_obj.is_verified = True
     profile_obj.save()
-    messages.success(request, 'OWWO,your mail is verified')
+    messages.success(request, 'Your mail is verified')
     return redirect('sign_inpp')
 
 def verify_sign_in_otp(request):
@@ -179,9 +179,10 @@ def verfiy_otp(request):
         if OTP:
             try:
                 pp = Profile.objects.get(otp=OTP)
-                # print(pp)
                 if pp :
-                    return redirect('set_new_passpp')
+                    print(pp)
+                
+                    return redirect('set_new_passpp',pp.id) # redirecting + sending a id so that we can found that user using that id
                 
             except:
                 messages.warning(request,"OTP Didn't matached")
@@ -190,13 +191,31 @@ def verfiy_otp(request):
     
     return render (request,'accounts/Forget_pass_otp.html')
 
-def set_new_pass(request):
+def set_new_pass(request,id):
     if request.method=='POST':
+        ppr=User.objects.get(id=id)
         Pass=request.POST['pass']
         Cpass=request.POST['cpass']
         if Pass and Cpass :
             if Pass==Cpass:
-                pass
+                if len(Pass)>7:
+                    ppr.set_password(Pass)
+                    ppr.save()
+                    update_session_auth_hash(request,ppr)
+                    messages.success(request,'Password Changed Successfully')
+                    return redirect ('sign_inpp')
+                else:
+                        messages.warning(request, "Password Must contain atleast 8 letters !!")
+            else:
+                messages.warning(request, "Your Password Didn't Match !!")
+        else:
+                messages.warning(request, "Please Enter Password !!")
 
     
     return render (request,'accounts/set_new_pass.html')
+
+def update_prof(request,id):
+    #home/base page user.id diye ..id send kore hoyeche ... 
+    
+
+    return render (request,'accounts/update_prof.html',locals())

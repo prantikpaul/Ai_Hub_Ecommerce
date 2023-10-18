@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import sign_in,sign_up,forget_pass,sign_out,verify_failed,verify_success,verify,verfiy_otp,set_new_pass
+from .views import sign_in,sign_up,forget_pass,sign_out,verify_failed,verify_success,verify,verfiy_otp,set_new_pass,update_prof
 
 urlpatterns = [
   path('Sign_In/',sign_in,name='sign_inpp'),
@@ -10,6 +10,8 @@ urlpatterns = [
   path('verify_failed/',verify_failed,name='verify_failedpp'),
   path('verify/<auth_token>/',verify,name='verifypp'),
   path('Forget_pass_otp/',verfiy_otp,name='verfiy_otppp'),
-  path('set_new_pass/',set_new_pass,name='set_new_passpp'),
+  path('set_new_pass/<int:id>/',set_new_pass,name='set_new_passpp'),
+  path('update/<int:id>/',update_prof,name='update_profpp'),
+
 
 ]
