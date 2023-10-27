@@ -13,4 +13,4 @@ def prod_page(request,id):
 def singl_pro(request):
     
 
-    return render (request,)
+    return render (request,'products/single_prod.html',locals())
