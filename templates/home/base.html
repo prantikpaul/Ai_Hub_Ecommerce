@@ -566,6 +566,12 @@
                                               <div id="mc-form" class="mc-form subscribe-form form-group" >
                                                 <input id="mc-email" type="email" autocomplete="off" placeholder="Enter your email" />
                                                 <button  class="btn" id="mc-submit">Subscribe</button>
+                                                    <div class="copyright text-center">
+                                                <br>
+                                                        <a href="#">
+                                                        <img src="{% static 'images/payment/1.png'%}" alt="">
+                                                         </a>
+                                                    </div>
                                               </div>
                                            </div>
                                         </form>
@@ -582,7 +588,7 @@
                 <div class="footer-static-bottom pt-55 pb-55">
                     <div class="container">
                         <div class="row">
-                            <div class="col-lg-12">
+                            {% comment %} <div class="col-lg-12">
                                 <!-- Begin Footer Links Area -->
                                 <div class="footer-links">
                                     <ul>
@@ -606,19 +612,15 @@
                                         <li><a href="#">Refunds</a></li>
                                         <li><a href="#">Policy Shipping</a></li>
                                     </ul>
-                                </div>
+                                </div> {% endcomment %}
                                 <!-- Footer Links Area End Here -->
                                 <!-- Begin Footer Payment Area -->
-                                <div class="copyright text-center">
-                                    <a href="#">
-                                        <img src="{% static 'images/payment/1.png'%}" alt="">
-                                    </a>
-                                </div>
+                                
                                 <!-- Footer Payment Area End Here -->
                                 <!-- Begin Copyright Area -->
-                                <div class="copyright text-center pt-25">
+                                {% comment %} <div class="copyright text-center pt-25">
                                     <span><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></span>
-                                </div>
+                                </div> {% endcomment %}
                                 <!-- Copyright Area End Here -->
                             </div>
                         </div>
