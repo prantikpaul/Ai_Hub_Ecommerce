@@ -10,7 +10,7 @@ def prod_page(request,id):
         
     return render(request,'products/product.html',locals())
 
-def singl_pro(request):
+def singl_pro(request,id):
     
 
     return render (request,'products/single_prod.html',locals())

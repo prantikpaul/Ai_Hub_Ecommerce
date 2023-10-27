@@ -142,7 +142,7 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <h4><a class="product_name" href="single-product.html">{{i.name}}</a></h4>
+                                                    <h4><a class="product_name" href="{% url 'single_prod' i.id %}">{{i.name}}</a></h4>
                                                     <div class="price-box">
                                                         <span class="new-price">${{i.new_price}}</span>
                                                     </div>
