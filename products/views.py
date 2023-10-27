@@ -9,3 +9,8 @@ def prod_page(request,id):
     
         
     return render(request,'products/product.html',locals())
+
+def singl_pro(request):
+    
+
+    return render (request,)
