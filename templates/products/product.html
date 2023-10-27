@@ -121,7 +121,7 @@
 
                                         <div class="single-product-wrap">
                                             <div class="product-image">
-                                                <a href="single-product.html">
+                                                <a href="{% url 'single_prod' i.id %}">
                                                     <img style="height:250px;" src="{{ i.prod_img.url }}" alt="Li's Product Image">
                                                 </a>
                                                 <span class="sticker">New</span>
