@@ -42,6 +42,3 @@ def singl_pro(request,id):
     return render (request,'products/single_prod.html',locals())
 
 
-def add_to_cart(request,id):
-    
-    pass
