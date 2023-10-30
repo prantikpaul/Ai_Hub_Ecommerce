@@ -531,7 +531,7 @@
                                     </div>
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
-                                            <li class="add-cart active"><a href="#">Add to cart</a></li>
+                                            <li class="add-cart active"><a href="{% url 'add_to_cart' i.id %}">Add to cart</a></li>
                                             <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
                                             <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                         </ul>
@@ -625,7 +625,7 @@
                                     </div>
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
-                                            <li class="add-cart active"><a href="#">Add to cart</a></li>
+                                            <li class="add-cart active"><a href="{% url 'add_to_cart' i.id %}">Add to cart</a></li>
                                             <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
                                             <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                         </ul>
@@ -718,7 +718,7 @@
                                     </div>
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
-                                            <li class="add-cart active"><a href="#">Add to cart</a></li>
+                                            <li class="add-cart active"><a href="{% url 'add_to_cart' i.id %}">Add to cart</a></li>
                                             <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
                                             <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                         </ul>
@@ -776,11 +776,7 @@
                     <h2>
                         <span>Trendding Products</span>
                     </h2>
-                    <ul class="nav li-product-menu li-trending-product-menu">
-                       <li><a class="active" data-toggle="tab" href="#home1"><span>Meito</span></a></li>
-                       <li><a data-toggle="tab" href="#home2"><span>Camera Accessories</span></a></li>
-                       <li><a data-toggle="tab" href="#home3"><span>XailStation</span></a></li>
-                    </ul>               
+                                  
                 </div>
                 <!-- Begin Li's Tab Menu Content Area -->
                 <div class="tab-content li-tab-content li-trending-product-content">
@@ -815,12 +811,12 @@
                                         </div>
                                         <h4><a class="product_name" href="single-product.html">{{i.name}}</a></h4>
                                         <div class="price-box">
-                                            <span class="new-price">$46.80</span>
+                                            <span class="new-price">${{i.new_price}}</span>
                                         </div>
                                     </div>
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
-                                            <li class="add-cart active"><a href="#">Add to cart</a></li>
+                                            <li class="add-cart active"><a href="{% url 'add_to_cart' i.id %}">Add to cart</a></li>
                                             <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
                                             <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                         </ul>
