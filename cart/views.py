@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from products.models import product
 from .models import cart
+from django.contrib import messages
 
 
 # Create your views here.
@@ -15,7 +16,7 @@ def add_to_cart(request,id):
                 try: # try kore dekhbe single page theke kono quantity send hoy ki na 
                     ttt = int(request.POST['qq']) # geting qunatity from product single page
                     for i in cart_prod:
-                        i.quantity += ttt
+                        i.quantity += ttt #quantity te single product view page er deowa quantity add korbe .. 
                         i.save()
                 except: # signle page theke kono qunatity send na hole .... 
                     for i in cart_prod:
@@ -27,7 +28,13 @@ def add_to_cart(request,id):
             add_cart.save()
                 
     except: # oi oi product already cart e na thake new cart er item create korbe
-        add_cart=cart.objects.create(user=request.user , product=prod) # request.user = bolte akhne kon user logged in asey ta get korbe
-        add_cart.save()
+        messages.warning(request, "To Add Items To Your Cart ,Please Log in")
+        return redirect ('sign_inpp')
     
     return redirect (request.META['HTTP_REFERER']) # reload niye protibar same page ei return korbe ... 
+
+# def show_cart(request):
+    
+        
+
+#     return render (request,'products/single_prod.html')
