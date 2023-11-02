@@ -23,6 +23,13 @@ def index(request):
         for i in len_cart: # in all carts how many items in there
             a += i.quantity # getting quantity of each cart and adding them
 
+        b = 0 # initializing a vallue adding vlaue to it
+        for i in len_cart: # in all carts how many items in there
+            p = i.product.new_price * i.quantity # getting each product and its quantity and multiplying them 
+            b += p
+
+
+
     except: 
         pass
         

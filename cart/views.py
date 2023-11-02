@@ -33,8 +33,35 @@ def add_to_cart(request,id):
     
     return redirect (request.META['HTTP_REFERER']) # reload niye protibar same page ei return korbe ... 
 
-# def show_cart(request):
+def show_cart(request):
+    userP = request.user # getting user
+    try:
+        if userP.is_authenticated: #if user is logged in
+            cart_show=cart.objects.filter(user=userP)
+            len_cart=cart.objects.filter(user=userP) #geting number of cart of that user
+            # if request.method == 'POST':
+            #     product_id = request.POST.get('a')
+            #     print(product_id)
+        a = 0 # initializing a vallue adding vlaue to it
+        for i in len_cart: # in all carts how many items in there
+            a += i.quantity # getting quantity of each cart and adding them
+        print(a)
+
+        total = 0 # initializing a vallue adding vlaue to it
+        for i in len_cart: # in all carts how many items in there
+            p = i.product.new_price * i.quantity # getting each product and its quantity and multiplying them 
+            total += p
+        total_with_shipping=total+100
+        
+        
+            
+
+
+
+    except: 
+        pass
+        
     
         
 
-#     return render (request,'products/single_prod.html')
+    return render (request,'cart/view_cart.html',locals())
