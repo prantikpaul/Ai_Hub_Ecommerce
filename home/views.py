@@ -16,9 +16,7 @@ def index(request):
         if userP.is_authenticated: #if user is logged in
             cart_show=cart.objects.filter(user=userP)[:2]
             len_cart=cart.objects.filter(user=userP) #geting number of cart of that user
-            # if request.method == 'POST':
-            #     product_id = request.POST.get('a')
-            #     print(product_id)
+            
         a = 0 # initializing a vallue adding vlaue to it
         for i in len_cart: # in all carts how many items in there
             a += i.quantity # getting quantity of each cart and adding them
@@ -32,7 +30,13 @@ def index(request):
 
     except: 
         pass
-        
+    
+     #for search bar ---------------------
+    search = request.GET.get('search')
+    print(search)
+    if search :
+        return redirect ('search_prod',search)
+    #for search bar ---------------------
     
 
 
