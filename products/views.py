@@ -1,10 +1,37 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from . models import category,product 
 from cart.models import cart
 
 # Create your views here.
 
 def prod_page(request,id):
+    #for search bar ---------------------
+    search = request.GET.get('search')
+    print(search)
+    if search :
+        return redirect ('search_prod',search)
+    #for search bar ---------------------
+
+    # for showing len of cart in cart button ---------------------------------------
+    userP = request.user # getting user
+    try:
+        if userP.is_authenticated: #if user is logged in
+            cart_show=cart.objects.filter(user=userP)[:2]
+            len_cart=cart.objects.filter(user=userP) #geting number of cart of that user
+            
+        a = 0 # initializing a vallue adding vlaue to it
+        for i in len_cart: # in all carts how many items in there
+            a += i.quantity # getting quantity of each cart and adding them
+
+        b = 0 # initializing a vallue adding vlaue to it
+        for i in len_cart: # in all carts how many items in there
+            p = i.product.new_price * i.quantity # getting each product and its quantity and multiplying them 
+            b += p
+
+    except:
+        pass
+    # for showing len of cart in cart button ---------------------------------------
+
     cat = category.objects.get(id=id)
     all_prod_of_cat=product.objects.filter(category=cat)
     
@@ -13,6 +40,32 @@ def prod_page(request,id):
     return render(request,'products/product.html',locals())
 
 def singl_pro(request,id):
+     #for search bar ---------------------
+    search = request.GET.get('search')
+    print(search)
+    if search :
+        return redirect ('search_prod',search)
+    #for search bar ---------------------
+        # for showing len of cart in cart button ---------------------------------------
+    userP = request.user # getting user
+    try:
+        if userP.is_authenticated: #if user is logged in
+            cart_show=cart.objects.filter(user=userP)[:2]
+            len_cart=cart.objects.filter(user=userP) #geting number of cart of that user
+            
+        a = 0 # initializing a vallue adding vlaue to it
+        for i in len_cart: # in all carts how many items in there
+            a += i.quantity # getting quantity of each cart and adding them
+
+        b = 0 # initializing a vallue adding vlaue to it
+        for i in len_cart: # in all carts how many items in there
+            p = i.product.new_price * i.quantity # getting each product and its quantity and multiplying them 
+            b += p
+
+    except:
+        pass
+    # for showing len of cart in cart button ---------------------------------------
+
     ppp = product.objects.get(id=id)
     
     rrr = ppp.category # for 15 other products in the same category: 
@@ -42,5 +95,13 @@ def singl_pro(request,id):
         show_prod=product.objects.filter(category='10')
     
     return render (request,'products/single_prod.html',locals())
+
+def search_prod(request,id):
+    rr=product.objects.filter(name__icontains=id)
+    
+
+    
+
+    return render (request,'products/search.html',locals())
 
 
