@@ -218,4 +218,4 @@ def update_prof(request,id):
     #home/base page user.id diye ..id send kore hoyeche ... 
     
 
-    return render (request,'accounts/update_prof.html',locals())
+    return render (request,'accounts/profile.html',locals())

@@ -49,4 +49,4 @@ def cart_remove(request,id):  #cart er X button click korle product remove kore 
     for i in ppq:
         i.delete()
 
-    return redirect('indexpp')
+    return redirect (request.META['HTTP_REFERER'])

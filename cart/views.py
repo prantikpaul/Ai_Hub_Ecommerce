@@ -1,7 +1,10 @@
 from django.shortcuts import render,redirect
 from products.models import product
-from .models import cart
+from .models import cart,order,save
 from django.contrib import messages
+from sslcommerz_lib import SSLCOMMERZ
+from django.views.decorators.csrf import csrf_exempt
+import time
 
 
 # Create your views here.
@@ -26,6 +29,8 @@ def add_to_cart(request,id):
         else: 
             add_cart=cart.objects.create(user=request.user , product=prod)
             add_cart.save()
+            savepp=save.objects.create(user=request.user,product=prod) # creating objects in save class to process data to save user order
+            savepp.save()
                 
     except: # oi oi product already cart e na thake new cart er item create korbe
         messages.warning(request, "To Add Items To Your Cart ,Please Log in")
@@ -39,25 +44,15 @@ def show_cart(request):
         if userP.is_authenticated: #if user is logged in
             cart_show=cart.objects.filter(user=userP)
             len_cart=cart.objects.filter(user=userP) #geting number of cart of that user
-            # if request.method == 'POST':
-            #     product_id = request.POST.get('a')
-            #     print(product_id)
         a = 0 # initializing a vallue adding vlaue to it
         for i in len_cart: # in all carts how many items in there
             a += i.quantity # getting quantity of each cart and adding them
-        print(a)
 
         total = 0 # initializing a vallue adding vlaue to it
         for i in len_cart: # in all carts how many items in there
             p = i.product.new_price * i.quantity # getting each product and its quantity and multiplying them 
             total += p
         total_with_shipping=total+100
-        
-        
-            
-
-
-
     except: 
         pass
         
@@ -65,3 +60,127 @@ def show_cart(request):
         
 
     return render (request,'cart/view_cart.html',locals())
+
+def check_out(request):
+    userP = request.user # getting user
+    if userP.is_authenticated: #if user is logged in
+        len_cart=cart.objects.filter(user=userP) #geting cart objects of that user
+        total = 0 # initializing a vallue adding vlaue to it
+        for i in len_cart: # in all carts how many items in there
+            p = i.product.new_price * i.quantity # getting each product and its quantity and multiplying them 
+            total += p
+    
+    
+    sslcz = SSLCOMMERZ({'store_id': 'niyam6412dc52e1e89', 'store_pass': 'niyam6412dc52e1e89@ssl', 'issandbox': True})
+    total_amount = total
+    data = {
+        'total_amount': total_amount,
+        'currency': "BDT",
+        'tran_id': "tran_12345",
+        'success_url': "http://127.0.0.1:8000/cart/save_order/",
+        # if transaction is succesful, user will be redirected here
+        'fail_url': "http://127.0.0.1:8000/cart/pay_failed/",  # if transaction is failed, user will be redirected here
+        # 'cancel_url': "http://127.0.0.1:8000/payment-cancelled",
+        # after user cancels the transaction, will be redirected here
+        'emi_option': "0",
+        'cus_name': "test",
+        'cus_email': "test@test.com",
+        'cus_phone': "01700000000",
+        'cus_add1': "customer address",
+        'cus_city': "Dhaka",
+        'cus_country': "Bangladesh",
+        'shipping_method': "NO",
+        'multi_card_name': "",
+        'num_of_item': 1,
+        'product_name': "Test",
+        'product_category': "Test Category",
+        'product_profile': "general",
+    }
+    
+
+    response = sslcz.createSession(data)
+    return redirect(response['GatewayPageURL'])
+    
+
+    
+
+def pay_success(request):
+    # userP = request.user 
+    # len_cart=save.objects.filter(user=userP) 
+    # quantity = 0
+    # list=[]
+    # total = 0 
+    # for i in len_cart: 
+    #     list.append(i.id)
+    #     p = i.product.new_price * i.quantity 
+    #     total += p
+    #     quantity += i.quantity
+    
+        
+    # new_order=order.objects.create(
+    #     user=userP,
+    #     total=total,
+        
+        
+        
+    # )
+    # new_order.order_items.set(list)
+            
+    # new_order.save()
+    ## need to work for get the qunatity to save order
+
+    userP = request.user # getting user
+    order_save=save.objects.filter(user=userP) 
+    len_cart=cart.objects.filter(user=userP) 
+
+    
+    list=[]
+    total = 0 
+    for i in order_save: 
+        list.append(i.id)
+        p = i.product.new_price 
+        total += p
+
+        
+    
+        
+    new_order=order.objects.create(
+        user=userP,
+        total=total,
+        
+        
+        
+    )
+    new_order.order_items.set(list)
+            
+    new_order.save()
+
+
+    len_cart.delete() #clearing cart after everything processed
+
+    
+    return render (request,'cart/pay_success.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@csrf_exempt
+def save_order(request):
+    #this func was to born to redirect to success page ... 
+    #because if @csrf_exempt is used u cant get request.user.... ! 
+    return redirect ('pay_success')
+
+@csrf_exempt
+def pay_failed(request):
+    
+    return render(request,'cart/pay_failed.html')
