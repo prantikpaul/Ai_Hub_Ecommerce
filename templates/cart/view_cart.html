@@ -21,7 +21,7 @@
                 <div class="container">
                     <div class="breadcrumb-content">
                         <ul>
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="{% url 'indexpp' %}">Home</a></li>
                             <li class="active">Shopping Cart</li>
                         </ul>
                     </div>
@@ -49,7 +49,7 @@
                                         <tbody>
                                             {% for i in cart_show %}
                                             <tr>
-                                                <td class="li-product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
+                                                <td class="li-product-remove"><a href="{% url 'cart_remove' i.product.id %}"><i class="fa fa-times"></i></a></td>
                                                 <td class="li-product-thumbnail"><a href="#"><img style="height: 80px; width: 90px ;" src="{{i.product.prod_img.url}}" alt="Li's Product Image"></a></td>
                                                 <td class="li-product-name"><a href="#">{{i.product.name}}</a></td>
                                                 <td class="li-product-price"><span class="amount">${{i.product.new_price}}</span></td>
@@ -92,7 +92,7 @@
                                                 <li>Shiping <span>$100</span></li>
                                                 <li>Total <span>${{total_with_shipping}}</span></li>
                                             </ul>
-                                            <a href="#">Proceed to checkout</a>
+                                            <a href="{% url 'check_out' %}">Proceed to checkout</a>
                                         </div>
                                     </div>
                                 </div>
