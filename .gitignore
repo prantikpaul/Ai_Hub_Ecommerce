@@ -7075,3 +7075,4 @@ env/Scripts/pip3.exe
 env/Scripts/python.exe
 env/Scripts/pythonw.exe
 env/Scripts/sqlformat.exe
+Ai_Hub/settings.py
