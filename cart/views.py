@@ -4,12 +4,13 @@ from .models import cart,order,save
 from django.contrib import messages
 from sslcommerz_lib import SSLCOMMERZ
 from django.views.decorators.csrf import csrf_exempt
-import time
+import random
 
 
 # Create your views here.
 def add_to_cart(request,id):
     prod = product.objects.get(id=id) #user kon product er add to cart a click korse ta oi product er id diye khuje ber kora
+    ppppp=product.objects.filter
     
 
     try:  # try kore dekhbe oi product already cart e ache ki na 
@@ -40,6 +41,7 @@ def add_to_cart(request,id):
 
 def show_cart(request):
     userP = request.user # getting user
+    
     try:
         if userP.is_authenticated: #if user is logged in
             cart_show=cart.objects.filter(user=userP)
@@ -62,6 +64,7 @@ def show_cart(request):
     return render (request,'cart/view_cart.html',locals())
 
 def check_out(request):
+    
     userP = request.user # getting user
     if userP.is_authenticated: #if user is logged in
         len_cart=cart.objects.filter(user=userP) #geting cart objects of that user
@@ -99,7 +102,8 @@ def check_out(request):
     
 
     response = sslcz.createSession(data)
-    return redirect(response['GatewayPageURL'])
+    return redirect('pay_success')
+    # return redirect(response['GatewayPageURL'])
     
 
     
@@ -128,11 +132,12 @@ def pay_success(request):
             
     # new_order.save()
     ## need to work for get the qunatity to save order
-
+    order_numP=random.randint(1111,9999)
     userP = request.user # getting user
     order_save=save.objects.filter(user=userP) 
     len_cart=cart.objects.filter(user=userP) 
 
+    
     
     list=[]
     total = 0 
@@ -140,23 +145,25 @@ def pay_success(request):
         list.append(i.id)
         p = i.product.new_price 
         total += p
-
+        
+    
+        
         
     
         
     new_order=order.objects.create(
         user=userP,
         total=total,
+        order_num=order_numP
+
         
         
         
     )
     new_order.order_items.set(list)
-            
+       
     new_order.save()
-
-
-    len_cart.delete() #clearing cart after everything processed
+#
 
     
     return render (request,'cart/pay_success.html')
@@ -182,5 +189,7 @@ def save_order(request):
 
 @csrf_exempt
 def pay_failed(request):
+    
+    
     
     return render(request,'cart/pay_failed.html')

@@ -11,6 +11,9 @@ from .models import Profile
 from django.conf import settings
 
 
+from cart.models import cart,order,save
+
+
 # Create your views here.
 
 def sign_in(request):
@@ -215,7 +218,21 @@ def set_new_pass(request,id):
     return render (request,'accounts/set_new_pass.html')
 
 def update_prof(request,id):
+    pp=order.objects.filter(user=id)
+    print(pp)
     #home/base page user.id diye ..id send kore hoyeche ... 
     
 
     return render (request,'accounts/profile.html',locals())
+
+def order_details(request,id):
+    u_get=order.objects.filter(user=request.user)
+    # print(u_get)
+    ppp=order.objects.get(user=request.user)
+    rrr=User.objects.get(username=request.user)
+    # print(ppp)
+    print(rrr)
+
+    
+
+    return render(request,'accounts/order_details.html',locals())

@@ -39,6 +39,7 @@ class order(models.Model):
     )
 
     user=models.ForeignKey(User,on_delete=models.CASCADE)
+    order_num=models.CharField(max_length=6,blank=True,null=True,)
     order_items=models.ManyToManyField(save)
     total=models.PositiveIntegerField(default=0)
     pay_method=models.CharField(blank=True,null=True,max_length=15)
