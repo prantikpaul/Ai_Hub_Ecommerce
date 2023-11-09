@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from products.models import product
-from .models import cart,order,save
+from .models import cart,Cart_Order,Order_items
 from django.contrib import messages
 from sslcommerz_lib import SSLCOMMERZ
 from django.views.decorators.csrf import csrf_exempt
@@ -30,8 +30,6 @@ def add_to_cart(request,id):
         else: 
             add_cart=cart.objects.create(user=request.user , product=prod)
             add_cart.save()
-            savepp=save.objects.create(user=request.user,product=prod) # creating objects in save class to process data to save user order
-            savepp.save()
                 
     except: # oi oi product already cart e na thake new cart er item create korbe
         messages.warning(request, "To Add Items To Your Cart ,Please Log in")
@@ -102,69 +100,52 @@ def check_out(request):
     
 
     response = sslcz.createSession(data)
-    return redirect('pay_success')
-    # return redirect(response['GatewayPageURL'])
+
+    return redirect(response['GatewayPageURL'])
     
 
     
 
 def pay_success(request):
-    # userP = request.user 
-    # len_cart=save.objects.filter(user=userP) 
-    # quantity = 0
-    # list=[]
-    # total = 0 
-    # for i in len_cart: 
-    #     list.append(i.id)
-    #     p = i.product.new_price * i.quantity 
-    #     total += p
-    #     quantity += i.quantity
-    
-        
-    # new_order=order.objects.create(
-    #     user=userP,
-    #     total=total,
-        
-        
-        
-    # )
-    # new_order.order_items.set(list)
+
+    try:
+        order_numP=random.randint(1111,9999)
+        userP = request.user # getting user
+        if userP.is_authenticated: #if user is logged in
+            len_cart=cart.objects.filter(user=userP) #geting cart objects of that user
+            total = 0 # initializing a vallue adding vlaue to it
+            for i in len_cart: # in all carts how many items in there
+                p = i.product.new_price * i.quantity # getting each product and its quantity and multiplying them 
+                total += p
+            if total>0 :
+                orderP=Cart_Order.objects.create(
+                    user=userP,
+                    total_amnt=total,
+                    order_no=order_numP,
+
+
+                )
+                orderP.save()
+                for i in len_cart:
+                    items=Order_items.objects.create(
+                        order=orderP,
+                        order_no=order_numP,
+                        item=i.product.name,
+                        qyt=i.quantity,
+                        price=i.product.new_price,
+                        total=i.quantity*i.product.new_price,
+
+
+                    )
+                items.save()
+                len_cart.delete()
+            else:
+                return redirect ('indexpp')
+    except:
+        return redirect ('indexpp')
             
-    # new_order.save()
-    ## need to work for get the qunatity to save order
-    order_numP=random.randint(1111,9999)
-    userP = request.user # getting user
-    order_save=save.objects.filter(user=userP) 
-    len_cart=cart.objects.filter(user=userP) 
-
-    
-    
-    list=[]
-    total = 0 
-    for i in order_save: 
-        list.append(i.id)
-        p = i.product.new_price 
-        total += p
-        
-    
-        
-        
-    
-        
-    new_order=order.objects.create(
-        user=userP,
-        total=total,
-        order_num=order_numP
 
         
-        
-        
-    )
-    new_order.order_items.set(list)
-       
-    new_order.save()
-#
-
     
     return render (request,'cart/pay_success.html')
 

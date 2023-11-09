@@ -105,35 +105,31 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            {% for i in u_get %}
-                                            {% for ii in i.order_items.all %}
+                                            {% for i in odr_itm %}
                                                 <tr>
                                                     <td>
                                                         <div class="d-flex">
                                                             <div class="flex-shrink-0 avatar-md bg-light rounded p-1">
-                                                                <img src="{{ii.product.prod_img.url}}" alt="" class="img-fluid d-block">
+                                                                <img src="" alt="" class="img-fluid d-block">
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
-                                                                <h5 class="fs-14"><a href="apps-ecommerce-product-details.html" class="text-body">{{ii}}</a></h5>
+                                                                <h5 class="fs-14"><a href="apps-ecommerce-product-details.html" class="text-body">{{i.item}}</a></h5>
                                                                 <!-- <p class="text-muted mb-0">Color: <span class="fw-medium">Pink</span></p>
                                                                 <p class="text-muted mb-0">Size: <span class="fw-medium">M</span></p> -->
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td>${{ii.product.new_price}}</td>
-                                                    <td>x</td>
+                                                    <td>${{i.price}}</td>
+                                                    <td>{{i.qyt}}</td>
                                                     <td>
                                                         <div class="text-warning fs-15">
                                                             <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-half-fill"></i>
                                                         </div>
                                                     </td>
-                                                    <td class="fw-medium text-end">
-                                                        $555
-                                                    </td>
+                                                    <td class="fw-medium text-end">${{i.total}}</td>
                                                 </tr>
+                                            
                                                 {% endfor %}
-                                                {% endfor %}
-                                                
                                                 <tr class="border-top border-top-dashed">
                                                     <td colspan="3"></td>
                                                     <td colspan="2" class="fw-medium p-0">
@@ -141,7 +137,7 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <td>Sub Total :</td>
-                                                                    <td class="text-end">$359.96</td>
+                                                                    <td class="text-end">${{sub_total}}</td>
                                                                 </tr>
                                                                 <!-- <tr>
                                                                     <td>Discount <span class="text-muted">(VELZON15)</span> : :</td>
@@ -158,7 +154,7 @@
                                                                 </tr> -->
                                                                 <tr class="border-top border-top-dashed">
                                                                     <th scope="row">Total (USD) :</th>
-                                                                    <th class="text-end">${{ppp.total}}</th>
+                                                                    <th class="text-end">${{total}}</th>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
