@@ -1,7 +1,24 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block title %} View Full Cart {% endblock %}
+
 {% block body %}
+<style>
+    .card-bodyy {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1.25rem 1.25rem 0.1rem 1.25rem;
+    }
+    .table-responsiveee {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+</style>
+
 <main class="main">
     <div class="page-header breadcrumb-wrap">
         <div class="container">
@@ -55,8 +72,8 @@
                                         <div class="card-header">
                                             <h5 class="mb-0">Your Orders</h5>
                                         </div>
-                                        <div class="card-body">
-                                            <div class="table-responsive">
+                                        <div class="card-bodyy">
+                                            <div class="table-responsiveee">
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
@@ -67,29 +84,18 @@
                                                             <th>Actions</th>
                                                         </tr>
                                                     </thead>
+                                                        {% for i in pp %}
                                                     <tbody>
                                                         <tr>
-                                                            <td>#1357</td>
-                                                            <td>March 45, 2020</td>
-                                                            <td>Processing</td>
-                                                            <td>$125.00 for 2 item</td>
-                                                            <td><a href="#" class="btn-small d-block">View</a></td>
+                                                            <td>#{{i.order_no}}</td>
+                                                            <td>{{i.order_at}}</td>
+                                                            <td>{{i.paid_status}}</td>
+                                                            <td>${{i.total_amnt}} for x item</td>
+                                                            <td><a href="{% url 'order_details' i.id %}" class="btn-small d-block">View</a></td>
                                                         </tr>
-                                                        <tr>
-                                                            <td>#2468</td>
-                                                            <td>June 29, 2020</td>
-                                                            <td>Completed</td>
-                                                            <td>$364.00 for 5 item</td>
-                                                            <td><a href="#" class="btn-small d-block">View</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#2366</td>
-                                                            <td>August 02, 2020</td>
-                                                            <td>Completed</td>
-                                                            <td>$280.00 for 3 item</td>
-                                                            <td><a href="#" class="btn-small d-block">View</a></td>
-                                                        </tr>
+                                                        
                                                     </tbody>
+                                                        {% endfor %}
                                                 </table>
                                             </div>
                                         </div>

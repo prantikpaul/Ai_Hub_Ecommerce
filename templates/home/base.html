@@ -8,7 +8,7 @@
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>{% block title %}Home Version Two || limupa - Digital Products Store ECommerce Bootstrap 4 Template{% endblock %}</title>
-        
+        {% block head %}
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Favicon -->
@@ -45,6 +45,7 @@
         <link rel="stylesheet" href="{% static 'css/responsive.css'%}">
         <!-- Modernizr js -->
         <script src="{% static 'js/vendor/modernizr-2.8.3.min.js'%}"></script>
+        {% endblock %}
         
     </head>
     <body>
