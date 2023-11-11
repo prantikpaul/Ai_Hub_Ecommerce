@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from . models import category,product 
+from . models import category,product,product_review
 from cart.models import cart
 
 # Create your views here.
@@ -73,7 +73,6 @@ def singl_pro(request,id):
 
 
     if prp =='Phone':
-        print(rrr)
         show_prod=product.objects.filter(category='1')
     elif prp=='Laptop':
         show_prod=product.objects.filter(category='2')
@@ -93,6 +92,47 @@ def singl_pro(request,id):
         show_prod=product.objects.filter(category='9')
     elif prp=='Groceries':
         show_prod=product.objects.filter(category='10')
+
+    if request.POST:
+        if request.user.is_authenticated:
+        
+            try:
+                get_star=request.POST['prq']
+                get_cmnt=request.POST['comment']
+                if get_star and get_cmnt:
+                    prod_rev=product_review.objects.create(
+                        product=ppp,
+                        user=request.user,
+                        review_rating=get_star,
+                        review_txt=get_cmnt
+
+                        
+                    )
+                    prod_rev.save()
+                    return redirect (request.META['HTTP_REFERER'])
+            except:
+                pass
+        else:
+            return redirect ('sign_inpp')
+    
+    
+    ttt=product_review.objects.filter(product=id)
+    try:
+        for i in ttt:
+
+            if int(i.review_rating) == 5:
+                pp_str=5
+            elif int(i.review_rating) == 4:
+                pp_str=4
+            elif int(i.review_rating) == 3:
+                pp_str=3
+            elif int(i.review_rating) == 2:
+                pp_str=2
+            elif int(i.review_rating) == 1:
+                pp_str=1
+    except:
+        pass
+        
     
     return render (request,'products/single_prod.html',locals())
 

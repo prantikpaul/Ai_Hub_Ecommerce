@@ -226,26 +226,19 @@ def update_prof(request,id):
     return render (request,'accounts/profile.html',locals())
 
 def order_details(request,id):
-    # u_get=order.objects.filter(user=request.user)
-    # # print(u_get)
-    # ppp=order.objects.get(user=request.user)
-    # rrr=User.objects.get(username=request.user)
-    # # print(ppp)
-    # print(rrr)
-
     u_get=Cart_Order.objects.get(pk=id)
     odr_itm=Order_items.objects.filter(order=u_get)
     sub_total=0
     shipping=100
     for i in odr_itm:
-        print(i.total)
+        # print(i.total)
         sub_total+=i.total
     total=sub_total+shipping
-    print(sub_total)
-    print(total)
+    # print(sub_total)
+    # print(total)
 
-    print(u_get)
-    print(odr_itm)
+    # print(u_get)
+    # print(odr_itm)
     
 
     return render(request,'accounts/order_details.html',locals())
