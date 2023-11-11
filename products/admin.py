@@ -4,6 +4,7 @@ from .models import *
 # Register your models here.
 
 admin.site.register(category)
+admin.site.register(product_review)
 
 
 class ProductAdmin(admin.ModelAdmin):

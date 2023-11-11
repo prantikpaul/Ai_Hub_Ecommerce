@@ -9,6 +9,8 @@ def index(request):
     tv_prod=product.objects.filter(category='5')
     smart_phn=product.objects.filter(category='1')
     trnding_prod=product.objects.filter(trending_prod=True)
+    hot_deal=product.objects.filter(hot_deal_prod=True)
+
 
     # for showing len of cart in cart button
     userP = request.user # getting user
