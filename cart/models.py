@@ -37,3 +37,10 @@ class Order_items(models.Model):
 
     def __str__(self):
       return self.order.user.username
+    
+class wish_list(models.Model):
+   user=models.ForeignKey(User,on_delete=models.CASCADE)
+   prod=models.ForeignKey(product,on_delete=models.CASCADE)
+
+   def __str__(self):
+      return self.user.username

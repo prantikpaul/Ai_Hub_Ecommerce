@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from products.models import product
-from .models import cart,Cart_Order,Order_items
+from .models import cart,Cart_Order,Order_items,wish_list
 from django.contrib import messages
 from sslcommerz_lib import SSLCOMMERZ
 from django.views.decorators.csrf import csrf_exempt
@@ -174,3 +174,27 @@ def pay_failed(request):
     
     
     return render(request,'cart/pay_failed.html')
+
+
+def add_to_wish_list(request,id):
+    uuu=request.user
+    # prod = product.objects.get(id=id)
+    try:
+        
+        ooo=product.objects.get(pk=id)
+        
+        # if request.user.is_authenticated:
+        crt_wish_list=wish_list.objects.create(
+            user=uuu,
+            prod=ooo
+        )
+        crt_wish_list.save()
+    except:
+        pass
+
+    return redirect (request.META['HTTP_REFERER'])
+
+def show_wish_list(request):
+    
+
+    return render (request,'cart/wishlist.html',locals())

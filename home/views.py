@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from products.models import category,product
 from cart.models import cart
 
+
 # Create your views here.
 def index(request):
     all_cat= category.objects.all()
