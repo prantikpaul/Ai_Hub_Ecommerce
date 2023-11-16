@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from products.models import product
+from products.models import product,category
 from .models import cart,Cart_Order,Order_items,wish_list
 from django.contrib import messages
 from sslcommerz_lib import SSLCOMMERZ
@@ -55,6 +55,19 @@ def show_cart(request):
         total_with_shipping=total+100
     except: 
         pass
+    
+    # for showing len of wishlist in wishlist button ---------------------------------------
+    userP = request.user # getting user
+    try:
+        shw_wish=wish_list.objects.filter(user=userP)
+        aaa=0
+        for i in shw_wish:
+            aaa+=1
+
+        print(aaa)
+    except:
+        pass
+    # for showing len of wishlist in wishlist button ---------------------------------------
         
     
         
@@ -151,17 +164,6 @@ def pay_success(request):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 @csrf_exempt
 def save_order(request):
     #this func was to born to redirect to success page ... 
@@ -177,24 +179,69 @@ def pay_failed(request):
 
 
 def add_to_wish_list(request,id):
-    uuu=request.user
-    # prod = product.objects.get(id=id)
     try:
         
         ooo=product.objects.get(pk=id)
-        
-        # if request.user.is_authenticated:
-        crt_wish_list=wish_list.objects.create(
-            user=uuu,
-            prod=ooo
-        )
-        crt_wish_list.save()
+        pOp=wish_list.objects.filter(user=request.user , prod=id) #check kore dekhbe ei user er wish-list a ei same product ase ki na 
+
+        if pOp: # jodi same prod thake ! 
+            pass #tahole wishlist a oi item abr add korbe na 
+        else: # oi iteam already na thakle wishlist a add korbe 
+            crt_wish_list=wish_list.objects.create(
+                user=request.user,
+                prod=ooo
+            )
+            crt_wish_list.save()
     except:
-        pass
+        messages.warning(request,'You need to log in , To add items to Wishlist')
 
     return redirect (request.META['HTTP_REFERER'])
 
 def show_wish_list(request):
+    if request.user.is_authenticated:
+        shw_wlist=wish_list.objects.filter(user=request.user)
+        # for showing len of wishlist in wishlist button ---------------------------------------
+        userP = request.user # getting user
+        try:
+            shw_wish=wish_list.objects.filter(user=userP)
+            aaa=0
+            for i in shw_wish:
+                aaa+=1
+
+        except:
+            pass
+        # for showing len of wishlist in wishlist button ---------------------------------------
+        
+        
+        # for showing len of cart in cart button ---------------------------------------
+        userP = request.user # getting user
+        try:
+            if userP.is_authenticated: #if user is logged in
+                cart_show=cart.objects.filter(user=userP)[:2]
+                len_cart=cart.objects.filter(user=userP) #geting number of cart of that user
+                
+            a = 0 # initializing a vallue adding vlaue to it
+            for i in len_cart: # in all carts how many items in there
+                a += i.quantity # getting quantity of each cart and adding them
+
+            b = 0 # initializing a vallue adding vlaue to it
+            for i in len_cart: # in all carts how many items in there
+                p = i.product.new_price * i.quantity # getting each product and its quantity and multiplying them 
+                b += p
+
+        except:
+            pass
+        # for showing len of cart in cart button ---------------------------------------
+    else:
+        messages.warning(request,'Please Log In')    
     
 
     return render (request,'cart/wishlist.html',locals())
+
+def wish_litem_remove(request,id):  #wish list er X button click korle product remove kore dibe ... 
+    ppq=wish_list.objects.filter(user=request.user , prod=id)
+    for i in ppq:
+        i.delete()
+    
+
+    return redirect (request.META['HTTP_REFERER'])

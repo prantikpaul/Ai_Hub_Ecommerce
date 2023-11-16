@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from . models import category,product,product_review
-from cart.models import cart
+from cart.models import cart,wish_list
 
 # Create your views here.
 
@@ -31,6 +31,19 @@ def prod_page(request,id):
     except:
         pass
     # for showing len of cart in cart button ---------------------------------------
+
+    # for showing len of wishlist in wishlist button ---------------------------------------
+    userP = request.user # getting user
+    try:
+        shw_wish=wish_list.objects.filter(user=userP)
+        aaa=0
+        for i in shw_wish:
+            aaa+=1
+
+        print(aaa)
+    except:
+        pass
+    # for showing len of wishlist in wishlist button ---------------------------------------
 
     cat = category.objects.get(id=id)
     all_prod_of_cat=product.objects.filter(category=cat)
@@ -66,6 +79,21 @@ def singl_pro(request,id):
         pass
     # for showing len of cart in cart button ---------------------------------------
 
+    # for showing len of wishlist in wishlist button ---------------------------------------
+    userP = request.user # getting user
+    try:
+        shw_wish=wish_list.objects.filter(user=userP)
+        aaa=0
+        for i in shw_wish:
+            aaa+=1
+
+        print(aaa)
+    except:
+        pass
+    # for showing len of wishlist in wishlist button ---------------------------------------
+    
+    
+    
     ppp = product.objects.get(id=id)
     
     rrr = ppp.category # for 15 other products in the same category: 

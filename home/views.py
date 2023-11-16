@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from products.models import category,product
-from cart.models import cart
+from cart.models import cart,wish_list
 
 
 # Create your views here.
@@ -40,6 +40,19 @@ def index(request):
     if search :
         return redirect ('search_prod',search)
     #for search bar ---------------------
+
+    # for showing len of wishlist in wishlist button ---------------------------------------
+    userP = request.user # getting user
+    try:
+        shw_wish=wish_list.objects.filter(user=userP)
+        aaa=0
+        for i in shw_wish:
+            aaa+=1
+
+        print(aaa)
+    except:
+        pass
+    # for showing len of wishlist in wishlist button ---------------------------------------
     
 
 
