@@ -87,7 +87,7 @@ def singl_pro(request,id):
         for i in shw_wish:
             aaa+=1
 
-        print(aaa)
+        
     except:
         pass
     # for showing len of wishlist in wishlist button ---------------------------------------

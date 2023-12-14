@@ -221,7 +221,7 @@
                                     <nav>
                                         <ul>
                                             <li class=""><a href="{% url 'indexpp' %}">Home</a></li>
-                                            <li class="megamenu-holder"><a href="shop-left-sidebar.html">Shop</a>
+                                            <!-- <li class="megamenu-holder"><a href="shop-left-sidebar.html">Shop</a>
                                                 <ul class="megamenu hb-megamenu">
                                                     <li><a href="shop-left-sidebar.html">Shop Page Layout</a>
                                                         <ul>
@@ -242,15 +242,15 @@
                                                         </ul>
                                                     </li>
                                                 </ul>
-                                            </li>
-                                            <li class="dropdown-holder"><a href="blog-left-sidebar.html">Blog</a>
+                                            </li> -->
+                                            <!-- <li class="dropdown-holder"><a href="blog-left-sidebar.html">Blog</a>
                                                 <ul class="hb-dropdown">
                                                     <li class="sub-dropdown-holder"><a href="blog-left-sidebar.html">Blog Grid View</a>
                                                         <ul class="hb-dropdown hb-sub-dropdown">
-                                                            <li><a href="blog-2-column.html">Blog 2 Column</a></li>
-                                                            <li><a href="blog-3-column.html">Blog 3 Column</a></li>
-                                                            <li><a href="blog-left-sidebar.html">Grid Left Sidebar</a></li>
-                                                            <li><a href="blog-right-sidebar.html">Grid Right Sidebar</a></li>
+                                                          
+                                                            {% for i in all_cat %}
+                                    <li style="font-weight: bolder;"><a href="{% url 'all_prod' i.id %}">{{i.name}}</a></li>
+                                    {% endfor %}
                                                         </ul>
                                                     </li>
                                                     <li class="sub-dropdown-holder"><a href="blog-list-left-sidebar.html">Blog List View</a>
@@ -302,7 +302,7 @@
                                                         </ul>
                                                     </li>
                                                 </ul>
-                                            </li>
+                                            </li> -->
                                             <li><a href="about-us.html">About Us</a></li>
                                             
                                             {% if user.is_authenticated %}
